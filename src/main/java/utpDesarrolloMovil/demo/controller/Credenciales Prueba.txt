@@ -1,0 +1,18 @@
+Tajeta aprobada:
+Numero: 4009 1753 3280 6176
+Titular: APRO
+FechaCaducidad: 11/25
+CVC: 123
+DNI: 123456789
+
+Tajeta rechazada:
+Numero: 4009 1753 3280 6176
+Titular: OTHE
+FechaCaducidad: 11/25
+CVC: 123
+DNI: 123456789
+
+Cuenta comprador MercadoPago:
+User/email: TESTUSER814048463
+pass: VOi21uC3uO
+
