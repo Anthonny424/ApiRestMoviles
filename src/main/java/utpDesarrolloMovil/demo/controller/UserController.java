@@ -8,12 +8,18 @@ import com.mercadopago.resources.Preference;
 import com.mercadopago.resources.datastructures.preference.BackUrls;
 import com.mercadopago.resources.datastructures.preference.Item;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 import utpDesarrolloMovil.demo.model.*;
 import utpDesarrolloMovil.demo.service.*;
@@ -22,6 +28,7 @@ import utpDesarrolloMovil.demo.service.*;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -48,6 +55,9 @@ public class UserController {
 
     @Value("${mercadopago.access_token}")
     private String accessToken;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
 
     //Requerimiento funcional 1 y 3 ver estaciones, horarios y servicios
@@ -147,6 +157,21 @@ public class UserController {
 
 
     //Requerimiento funcional 5 Poder crear, gestionar perfil, ver tarjeta, ver tus tickets
+
+    @PostMapping("/login")
+    public ResponseEntity<Object> login(@RequestBody Usuario usuario){
+        try{
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(usuario.getUsername(), usuario.getContrasena());
+            Authentication authentication = authenticationManager.authenticate(token);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            Usuario usuario1 = usuarioService.encontrarPorUsename(usuario.getUsername());
+            Usuario user = usuarioService.getUsuarioPorId(usuario1.getId());
+
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(user);
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed - " +e.getMessage());
+        }
+    }
 
 
     @PostMapping("/create")

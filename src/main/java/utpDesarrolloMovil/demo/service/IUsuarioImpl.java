@@ -8,6 +8,7 @@ import utpDesarrolloMovil.demo.repository.UsuarioRepository;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -43,7 +44,6 @@ public class IUsuarioImpl implements IUsuario{
     public Usuario SaveUsuarioCompleto(Usuario usuario) {
         Usuario nuevoUsuario = usuario;
         nuevoUsuario.setContrasena(passwordEncoder.encode(nuevoUsuario.getContrasena()));
-
         nuevoUsuario.setEnable(true);
         nuevoUsuario.setAccountNoExpired(true);
         nuevoUsuario.setAccountNoLocked(true);
@@ -94,4 +94,11 @@ public class IUsuarioImpl implements IUsuario{
 
         return repository.save(usuario1);
     }
+
+    @Override
+    public Usuario encontrarPorUsename(String username) {
+        return repository.findUserByUsername(username).get();
+    }
+
+
 }
