@@ -1,10 +1,11 @@
 package utpDesarrolloMovil.demo.service;
 
+import utpDesarrolloMovil.demo.dto.TicketDTO;
 import utpDesarrolloMovil.demo.model.Ticket;
 
 import java.util.List;
 
 public interface ITicket {
-    List<Ticket> getTicketPorId(int id);
+    List<TicketDTO> getTicketPorId(int id);
     void guardarTicket(Ticket ticket);
 }

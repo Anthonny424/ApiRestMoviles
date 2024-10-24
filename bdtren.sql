@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-10-2024 a las 04:21:00
+-- Tiempo de generación: 25-10-2024 a las 01:02:04
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -13535,7 +13535,10 @@ INSERT INTO `personas` (`dni`, `edad`, `id`, `usuarios_id`, `apellido`, `nombre`
 (12345678, 30, 7, 7, 'Pérez', 'Carlos'),
 (74865715, 30, 8, 8, 'Castillo', 'Pedro'),
 (8756363, 26, 9, 9, 'Huett', 'Mathews'),
-(95454754, 30, 11, 14, 'Test', 'Test');
+(95454754, 30, 11, 14, 'Test', 'Test'),
+(12348796, 30, 12, 15, 'Smith', 'George'),
+(87348796, 30, 13, 16, 'Smith', 'Juanito'),
+(12348795, 20, 14, 17, 'Jhonson', 'Carlos');
 
 -- --------------------------------------------------------
 
@@ -13623,7 +13626,10 @@ INSERT INTO `tarjetas` (`id`, `saldo`, `usuarios_id`, `tarifas_id`, `nrotarjeta`
 (6, 1.5, 7, 1, 69696969),
 (7, 1.5, 8, 1, 942657265),
 (8, 1.5, 9, 1, 45983526),
-(9, 3, 14, 1, 69696969);
+(9, 3, 14, 1, 69696969),
+(10, 1.5, 15, 1, 46367263),
+(11, 6, 16, 1, 76367258),
+(12, 1.5, 17, 1, 46367261);
 
 -- --------------------------------------------------------
 
@@ -13652,7 +13658,9 @@ INSERT INTO `tickets` (`id`, `importe`, `nuevosaldo`, `saldoanterior`, `tarjetas
 (5, 3, 3, 0, 3, '2024-06-10 12:20:00.000000'),
 (6, 24, 25.5, 1.5, 3, '2024-07-30 14:30:00.000000'),
 (7, 3, 24, 21, 1, '2024-10-08 23:51:21.000000'),
-(8, 1.5, 3, 1.5, 9, '2024-10-10 20:49:13.000000');
+(8, 1.5, 3, 1.5, 9, '2024-10-10 20:49:13.000000'),
+(9, 1.5, 3, 1.5, 11, '2024-10-22 22:57:18.000000'),
+(10, 3, 6, 3, 11, '2024-10-23 00:46:49.000000');
 
 -- --------------------------------------------------------
 
@@ -13681,7 +13689,10 @@ INSERT INTO `usuarios` (`id`, `username`, `contrasena`, `account_no_expired`, `a
 (7, 'usuarioTEST', '$2a$10$.z/s7HoTKTK17qYFrXMQ5.UMj./BWw0wnleOrG//oAPchegYwq0WO', b'1', b'1', b'1', b'1'),
 (8, 'Pedro1234', '$2a$10$ksdyvhfwcaI8G..K3fMr1uZlHQ9oYxmZ9fo4H8YtDsphXNj7WytmC', b'1', b'1', b'1', b'1'),
 (9, 'Mathews123', '$2a$10$jkTBFJJrSH.N2GQlsFFn/uZoJWR230kEUKAYw1pMWFxCyFXZG8LZG', b'1', b'1', b'1', b'1'),
-(14, 'PruebaUpdatezzzz', '$2a$10$JMBIfs55XM9KKeNN2afWcuUlHvYNVxsVINc657Y0hJhWEXrbXQhdi', b'1', b'1', b'1', b'1');
+(14, 'PruebaUpdatezzzz', '$2a$10$JMBIfs55XM9KKeNN2afWcuUlHvYNVxsVINc657Y0hJhWEXrbXQhdi', b'1', b'1', b'1', b'1'),
+(15, 'Yanosequeponer', '$2a$10$IUwJtXugPCOQJ/y.U/AItuSgTFoZwZKxzmTrEJ4kDkU16x3.v2pGC', b'1', b'1', b'1', b'1'),
+(16, 'UsuarioParaTest', '$2a$10$Nvt678qCgmV6o9btad3ypObl5JvS0u4CoqDchklbiywidNl6QuNze', b'1', b'1', b'1', b'1'),
+(17, 'Carlos456', '$2a$10$OK4eGMf0OLf6nVtg0wJd2u8G.oSjQWOkqyvQEF4kB7fp8E9e4x106', b'1', b'1', b'1', b'1');
 
 -- --------------------------------------------------------
 
@@ -13705,7 +13716,10 @@ INSERT INTO `usuarios_roles` (`usuarios_id`, `roles_id`) VALUES
 (7, 2),
 (8, 2),
 (9, 2),
-(14, 2);
+(14, 2),
+(15, 2),
+(16, 2),
+(17, 2);
 
 --
 -- Índices para tablas volcadas
@@ -13818,7 +13832,7 @@ ALTER TABLE `permisos`
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -13836,19 +13850,19 @@ ALTER TABLE `tarifas`
 -- AUTO_INCREMENT de la tabla `tarjetas`
 --
 ALTER TABLE `tarjetas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Restricciones para tablas volcadas

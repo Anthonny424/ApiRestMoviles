@@ -1,5 +1,6 @@
 package utpDesarrolloMovil.demo.service;
 
+import utpDesarrolloMovil.demo.dto.TarjetaDTO;
 import utpDesarrolloMovil.demo.model.Tarjeta;
 
 import java.util.List;
@@ -9,7 +10,8 @@ public interface ITarjeta {
 
 
     List<Tarjeta> getAllTarjetas();
-    Optional<Tarjeta> buscarPorIdWithJPQL(int id);
+    TarjetaDTO buscarPorIdWithJPQL(int id);
+    Tarjeta buscarPorIdNoDTO(int id);
     void guardarTarjeta(Tarjeta tarjeta);
 
 }

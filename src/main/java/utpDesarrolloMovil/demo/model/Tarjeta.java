@@ -24,10 +24,7 @@ public class Tarjeta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private double saldo;
-    @Positive
-    @NotNull
-    @Min(value = 10000000, message = "El número de tarjeta debe ser de al menos 8 dígitos")
-    @Max(value = 99999999, message = "El número de tarjeta no puede superar los 8 dígitos")
+
     @Column(unique = true)
     private int nrotarjeta;
 

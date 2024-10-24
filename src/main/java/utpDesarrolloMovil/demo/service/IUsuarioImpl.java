@@ -1,8 +1,10 @@
 package utpDesarrolloMovil.demo.service;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import utpDesarrolloMovil.demo.dto.*;
 import utpDesarrolloMovil.demo.model.*;
 import utpDesarrolloMovil.demo.repository.UsuarioRepository;
 
@@ -31,8 +33,23 @@ public class IUsuarioImpl implements IUsuario{
 
 
     @Override
-    public Usuario getUsuarioPorId(int id) {
+    public Usuario findUserByIdNotDto(int id) {
         return repository.findById(id);
+    }
+
+    @Override
+    public UsuarioDTO getUsuarioPorId(int id) {
+        Usuario usuario = repository.findById(id);
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.typeMap(Usuario.class, UsuarioDTO.class)
+                .addMappings(mapper -> {
+                    mapper.map(Usuario::getTarjeta, UsuarioDTO::setTarjetaDTO);
+                    mapper.map(src -> src.getTarjeta().getTarifa(),
+                            (dest, value) -> dest.getTarjetaDTO().setTarifaDTO((TarifaDTO) value));
+                    mapper.map(Usuario::getPersona, UsuarioDTO::setPersonaDTO);
+                });
+        UsuarioDTO usuarioDTO = modelMapper.map(usuario, UsuarioDTO.class);
+        return usuarioDTO;
     }
 
     @Override
@@ -41,9 +58,10 @@ public class IUsuarioImpl implements IUsuario{
     }
 
     @Override
-    public Usuario SaveUsuarioCompleto(Usuario usuario) {
-        Usuario nuevoUsuario = usuario;
-        nuevoUsuario.setContrasena(passwordEncoder.encode(nuevoUsuario.getContrasena()));
+    public UsuarioDTO SaveUsuarioCompleto(UsuarioCreateDTO usuarioDTO) {
+        Usuario nuevoUsuario = new Usuario();
+        nuevoUsuario.setUsername(usuarioDTO.getUsername());
+        nuevoUsuario.setContrasena(passwordEncoder.encode(usuarioDTO.getPassword()));
         nuevoUsuario.setEnable(true);
         nuevoUsuario.setAccountNoExpired(true);
         nuevoUsuario.setAccountNoLocked(true);
@@ -64,7 +82,7 @@ public class IUsuarioImpl implements IUsuario{
         //Asociar ID de tarjeta al usuario y tarifa por defecto
         Tarjeta tarjeta = new Tarjeta();
         tarjeta.setSaldo(1.50); //Le pongo 1.50 por defecto pq no sabemos el monto de cada tarjeta de lima
-        tarjeta.setNrotarjeta(usuario.getTarjeta().getNrotarjeta());
+        tarjeta.setNrotarjeta(usuarioDTO.getTarjetaDTO().getNrotarjeta());
         Tarifa tarifaexistente = tarifaService.buscarporId(1);//Tarifa PASAJE COMPLETO
         tarjeta.setTarifa(tarifaexistente);
         tarjeta.setUsuario(nuevoUsuario);
@@ -72,18 +90,29 @@ public class IUsuarioImpl implements IUsuario{
 
         //Registrar persona asociada a este usuario
         Persona persona = new Persona();
-        persona.setNombre(nuevoUsuario.getPersona().getNombre());
-        persona.setApellido(nuevoUsuario.getPersona().getApellido());
-        persona.setDni(nuevoUsuario.getPersona().getDni());
-        persona.setEdad(nuevoUsuario.getPersona().getEdad());
+        persona.setNombre(usuarioDTO.getPersonaDTO().getNombre());
+        persona.setApellido(usuarioDTO.getPersonaDTO().getApellido());
+        persona.setDni(usuarioDTO.getPersonaDTO().getDni());
+        persona.setEdad(usuarioDTO.getPersonaDTO().getEdad());
         persona.setUsuario(nuevoUsuario);
         nuevoUsuario.setPersona(persona);
+        repository.save(nuevoUsuario);
 
-        return GuardarUser(nuevoUsuario);
+        Usuario usuario = repository.findUserByUsername(usuarioDTO.getUsername()).get();
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.typeMap(Usuario.class, UsuarioDTO.class)
+                .addMappings(mapper -> {
+                    mapper.map(Usuario::getTarjeta, UsuarioDTO::setTarjetaDTO);
+                    mapper.map(src -> src.getTarjeta().getTarifa(),
+                            (dest, value) -> dest.getTarjetaDTO().setTarifaDTO((TarifaDTO) value));
+                    mapper.map(Usuario::getPersona, UsuarioDTO::setPersonaDTO);
+                });
+        UsuarioDTO usuarioFound = modelMapper.map(usuario, UsuarioDTO.class);
+        return usuarioFound;
     }
 
     @Override
-    public Usuario updateUsuario(Usuario usuarioEncontrado, String username, String contrasena, int nrotarjeta) {
+    public UsuarioDTO updateUsuario(Usuario usuarioEncontrado, String username, String contrasena, int nrotarjeta) {
         Usuario usuario1 = usuarioEncontrado;
         usuario1.setId(usuarioEncontrado.getId());
         usuario1.setUsername(username);
@@ -91,8 +120,18 @@ public class IUsuarioImpl implements IUsuario{
         Tarjeta tarjeta = usuario1.getTarjeta();
         tarjeta.setNrotarjeta(nrotarjeta);
         usuario1.setTarjeta(tarjeta);
+        Usuario usuario = repository.save(usuario1);
 
-        return repository.save(usuario1);
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.typeMap(Usuario.class, UsuarioDTO.class)
+                .addMappings(mapper -> {
+                    mapper.map(Usuario::getTarjeta, UsuarioDTO::setTarjetaDTO);
+                    mapper.map(src -> src.getTarjeta().getTarifa(),
+                            (dest, value) -> dest.getTarjetaDTO().setTarifaDTO((TarifaDTO) value));
+                    mapper.map(Usuario::getPersona, UsuarioDTO::setPersonaDTO);
+                });
+        UsuarioDTO usuarioUpdated = modelMapper.map(usuario, UsuarioDTO.class);
+        return usuarioUpdated;
     }
 
     @Override

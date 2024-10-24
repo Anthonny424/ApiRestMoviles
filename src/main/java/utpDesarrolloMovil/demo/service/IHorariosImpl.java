@@ -1,10 +1,13 @@
 package utpDesarrolloMovil.demo.service;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import utpDesarrolloMovil.demo.dto.HorarioDTO;
 import utpDesarrolloMovil.demo.model.Horario;
 import utpDesarrolloMovil.demo.repository.HorarioRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,7 +21,13 @@ public class IHorariosImpl implements IHorarios{
     }
 
     @Override
-    public List<Horario> getByEstacion(Integer id) {
-        return repository.findAllByEstacionId(id);
+    public List<HorarioDTO> getByEstacion(Integer id) {
+        ModelMapper modelMapper = new ModelMapper();
+        List<Horario> horarios = repository.findAllByEstacionId(id);
+        List<HorarioDTO> horarioDTOS = new ArrayList<>();
+        for (Horario horario: horarios){
+            horarioDTOS.add(modelMapper.map(horario, HorarioDTO.class));
+        }
+        return horarioDTOS;
     }
 }

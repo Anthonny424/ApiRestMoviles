@@ -27,11 +27,7 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(unique = true)
-    @NotNull
-    @NotBlank
     private String username;
-    @NotNull
-    @NotBlank
     private String contrasena;
 
     private boolean isEnable;

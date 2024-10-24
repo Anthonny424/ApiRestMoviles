@@ -3,7 +3,7 @@ Numero: 4009 1753 3280 6176
 Titular: APRO
 FechaCaducidad: 11/25
 CVC: 123
-DNI: 123456789
+DNI: 12345678
 
 Tajeta rechazada:
 Numero: 4009 1753 3280 6176
@@ -12,7 +12,9 @@ FechaCaducidad: 11/25
 CVC: 123
 DNI: 123456789
 
-Cuenta comprador MercadoPago:
+Cuenta comprador PRUEBA MercadoPago:
 User/email: TESTUSER814048463
 pass: VOi21uC3uO
 
+
+Si vas a testear con las tarjetas de pruebas, ANTES debes logearte en MercadoPago con las credenciales de prueba, las de arriba
