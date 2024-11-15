@@ -10,7 +10,7 @@ public interface ITarjeta {
 
 
     List<Tarjeta> getAllTarjetas();
-    TarjetaDTO buscarPorIdWithJPQL(int id);
+    TarjetaDTO buscarPorIdUserWithJPQL(int id);
     Tarjeta buscarPorIdNoDTO(int id);
     void guardarTarjeta(Tarjeta tarjeta);
 

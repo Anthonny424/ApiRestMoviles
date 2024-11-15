@@ -22,13 +22,13 @@ public class ITarjetaImpl implements ITarjeta {
     }
 
     @Override
-    public TarjetaDTO buscarPorIdWithJPQL(int id) {
+    public TarjetaDTO buscarPorIdUserWithJPQL(int id) {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.typeMap(Tarjeta.class, TarjetaDTO.class)
                 .addMappings(mapper -> {
                     mapper.map(Tarjeta::getTarifa, TarjetaDTO::setTarifaDTO);
                 });
-        Tarjeta tarjeta = repository.findById(id).get();
+        Tarjeta tarjeta = repository.findByUsuarioId(id).get();
         TarjetaDTO tarjetaDTO = modelMapper.map(tarjeta, TarjetaDTO.class);
         return tarjetaDTO;
     }

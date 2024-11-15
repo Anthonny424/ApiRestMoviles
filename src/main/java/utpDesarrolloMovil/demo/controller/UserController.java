@@ -163,9 +163,9 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioDTO);
     }
 
-    @GetMapping("/auth/tarjeta/{idtarjeta}") //Retorna info. tarjeta, tarifa del
-    public ResponseEntity<TarjetaDTO> getTarjeta(@PathVariable int idtarjeta){
-        TarjetaDTO tarjetaDTO = tarjetaService.buscarPorIdWithJPQL(idtarjeta);
+    @GetMapping("/auth/tarjeta/{iduser}") //Retorna info. tarjeta, tarifa del
+    public ResponseEntity<TarjetaDTO> getTarjeta(@PathVariable int iduser){
+        TarjetaDTO tarjetaDTO = tarjetaService.buscarPorIdUserWithJPQL(iduser);
         return ResponseEntity.status(HttpStatus.FOUND).body(tarjetaDTO);
     }
 
