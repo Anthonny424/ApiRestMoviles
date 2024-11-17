@@ -37,7 +37,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = repository.findUserByUsername(username).get();
-
         //Convertir ese usuario de bd a User (obj de spring sec.)
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>(); //Spring security solo entiende esta coleccion
         usuario.getRoles().forEach(role -> authorityList.add(new SimpleGrantedAuthority("ROLE_".concat(role.getRoleEnum().name())))); //Pasamos todos los roles a la que solo entiende Spring Sec.
@@ -59,9 +58,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
         String username = authLoginRequest.username();
         String password = authLoginRequest.password();
         Authentication authentication = this.authenticate(username, password); //Segundo paso, guardamos ese objeto authenticado en el sec. contex. holder
+        Usuario usuario = repository.findUserByUsername(username).get();
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String accesstoken = jwtUtils.createToken(authentication); //le generamos un token a ese objeto
-        AuthResponse authResponse = new AuthResponse(username, "User loged Succesfully", accesstoken, true);
+        AuthResponse authResponse = new AuthResponse(username, "User loged Succesfully", accesstoken, true, usuario.getId());
         return authResponse;
 
     }
