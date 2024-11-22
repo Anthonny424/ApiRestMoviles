@@ -8,7 +8,6 @@ utpDesarrolloMovil\demo\model\Horario.class
 utpDesarrolloMovil\demo\model\Permiso.class
 utpDesarrolloMovil\demo\service\MailService.class
 utpDesarrolloMovil\demo\util\JwtUtils.class
-utpDesarrolloMovil\demo\model\RecargaRequest.class
 utpDesarrolloMovil\demo\repository\PersonaRepository.class
 utpDesarrolloMovil\demo\repository\RolRepository.class
 utpDesarrolloMovil\demo\service\IPermiso.class
@@ -23,11 +22,9 @@ utpDesarrolloMovil\demo\service\IHorarios.class
 utpDesarrolloMovil\demo\model\RoleEnum.class
 utpDesarrolloMovil\demo\service\ITarifa.class
 utpDesarrolloMovil\demo\service\IUsuarioImpl.class
-utpDesarrolloMovil\demo\model\EmailRequest.class
 utpDesarrolloMovil\demo\repository\TicketRepository.class
 utpDesarrolloMovil\demo\service\IRol.class
 utpDesarrolloMovil\demo\ApiRestMovilesApplication.class
-utpDesarrolloMovil\demo\model\EmailRequest$EmailRequestBuilder.class
 utpDesarrolloMovil\demo\repository\TarifaRepository.class
 utpDesarrolloMovil\demo\dto\TarjetaDTO.class
 utpDesarrolloMovil\demo\service\UserDetailServiceImpl.class
@@ -45,9 +42,11 @@ utpDesarrolloMovil\demo\model\Usuario.class
 utpDesarrolloMovil\demo\service\IUsuario.class
 utpDesarrolloMovil\demo\model\Tarjeta.class
 utpDesarrolloMovil\demo\security\filter\JwtTokenValidator.class
+utpDesarrolloMovil\demo\dto\EmailRequest.class
 utpDesarrolloMovil\demo\dto\AuthResponse.class
 utpDesarrolloMovil\demo\dto\EstacionDTO.class
 utpDesarrolloMovil\demo\dto\UsuarioDTO.class
+utpDesarrolloMovil\demo\dto\EmailRequest$EmailRequestBuilder.class
 utpDesarrolloMovil\demo\service\IEstacion.class
 utpDesarrolloMovil\demo\repository\HorarioRepository.class
 utpDesarrolloMovil\demo\model\Rol.class
@@ -56,3 +55,5 @@ utpDesarrolloMovil\demo\controller\UserController.class
 utpDesarrolloMovil\demo\service\IPersona.class
 utpDesarrolloMovil\demo\model\Ticket.class
 utpDesarrolloMovil\demo\service\IHorariosImpl.class
+utpDesarrolloMovil\demo\dto\RecargaRequest.class
+utpDesarrolloMovil\demo\dto\RecargaResponse.class

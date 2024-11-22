@@ -21,7 +21,6 @@ import utpDesarrolloMovil.demo.model.*;
 import utpDesarrolloMovil.demo.service.*;
 
 
-import java.net.URI;
 import java.util.Date;
 import java.util.List;
 
@@ -75,7 +74,7 @@ public class UserController {
     //Requerimiento funcional 2 Recargar tarjeta
 
     @PostMapping("/auth/createAndRedirect")
-    public ResponseEntity<Void> createAndRedirect(@RequestBody RecargaRequest request) throws MPException {
+    public ResponseEntity<RecargaResponse> createAndRedirect(@RequestBody RecargaRequest request) throws MPException {
         MercadoPago.SDK.setAccessToken(accessToken);
         Preference preference = new Preference();
         preference.setBackUrls(
@@ -94,9 +93,11 @@ public class UserController {
         String sandboxInitPoint = result.getSandboxInitPoint();
         System.out.println("Sandbox Init Point: " + sandboxInitPoint);
 
-        return ResponseEntity.status(302)
-                .location(URI.create(sandboxInitPoint))
-                .build();
+        RecargaResponse response = new RecargaResponse(sandboxInitPoint);
+
+        System.out.println("Response: " + response);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/success")
